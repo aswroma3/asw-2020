@@ -50,13 +50,13 @@ E' anche possibile:
 
 ## Ambienti 
 
-<!---
 * [developer](developer/):
   per la compilazione e l'assemblaggio (build) dei progetti definiti nella cartella [projects/](../projects/) del repository, 
-  nonché per l'esecuzione di applicazioni Java; 
+  nonché per l'esecuzione di semplici applicazioni Java; 
   i progetti (in questo e, anche negli altri ambienti) potranno essere trovati 
   nella cartella **/home/asw/projects/** oppure nella cartella **projects/** dell'utente di default 
 
+<!---
 * [workstation](workstation/):
   un ambiente alternativo a [developer](developer/) per la compilazione e l'assemblaggio (build) dei progetti 
   e per la loro esecuzione; 
