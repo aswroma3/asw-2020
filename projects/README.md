@@ -78,9 +78,9 @@ Nei casi più semplici, è possibile eseguire un'applicazione come segue:
 
 ## Progetti 
 
-<!---
 * [asw-000-ciao-mondo](asw-000-ciao-mondo/): un semplice progetto di prova 
 
+<!---
 * [asw-810-introduzione](asw-810-introduzione/): introduzione ai connettori  
 
 * [asw-815-socket](asw-815-socket/): socket e comunicazione client-server 
