@@ -1,4 +1,4 @@
-# asw-000-ciao-mondo
+# Ciao mondo (asw-000)
 
 Questo progetto contiene una sola applicazione **ciao-mondo**, 
 che non è un'applicazione distribuita. 
