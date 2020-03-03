@@ -80,10 +80,10 @@ Nei casi più semplici, è possibile eseguire un'applicazione come segue:
 
 * [asw-000-ciao-mondo](asw-000-ciao-mondo/): un semplice progetto di prova 
 
-<!---
-* [asw-810-introduzione](asw-810-introduzione/): introduzione ai connettori  
+* [asw-810-introduzione-connettori](asw-810-introduzione-connettori/): introduzione ai connettori  
 
-* [asw-815-socket](asw-815-socket/): socket e comunicazione client-server 
+<!---
+* [asw-815-connettori-distribuiti](asw-815-connettori-distribuiti/): connettori distribuiti e comunicazione client-server 
 
 * [asw-820-spring-framework](asw-820-spring-framework/): introduzione al framework *Spring* 
 
