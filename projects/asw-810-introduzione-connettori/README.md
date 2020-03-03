@@ -1,4 +1,4 @@
-# asw-810-introduzione-connettori
+# Introduzione ai connettori (asw-810)
 
 Questo progetto contiene alcune semplici applicazioni 
 per introdurre l'uso dei **connettori**: 
