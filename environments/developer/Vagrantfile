@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     #
     # Configurazione del nodo "dev", che prevede: 
-    # - Java SDK 8 (Open JDK)
+    # - Java SDK (Open JDK 11)
     # - Gradle 
     # - Apache Maven 
     #
