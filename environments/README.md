@@ -56,7 +56,6 @@ E' anche possibile:
   i progetti (in questo e, anche negli altri ambienti) potranno essere trovati 
   nella cartella **/home/asw/projects/** oppure nella cartella **projects/** dell'utente di default 
 
-<!---
 * [workstation](workstation/):
   un ambiente alternativo a [developer](developer/) per la compilazione e l'assemblaggio (build) dei progetti 
   e per la loro esecuzione; 
@@ -65,6 +64,7 @@ E' anche possibile:
   per consentire anche l'esecuzione concorrente di molteplici applicazioni; 
   inoltre, ha anche *Docker* oltre al software di sviluppo per *Java*
 
+<!---
 * [client-server](client-server/): 
   per l'esecuzione di applicazioni Java distribuite di tipo client-server 
 
