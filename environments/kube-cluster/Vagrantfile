@@ -1,0 +1,156 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+KUBE_CLUSTER_MASTER_IP='10.11.1.71'
+
+KUBE_CLUSTER_NODES = [
+    {
+        :name => "kube-1",
+        :type => "master",
+        :box => "bento/ubuntu-18.04",
+        :eth1 => "10.11.1.71",
+        :httpport => "8081",
+        :memory => "2048",
+        :cpus => "2", 
+        :cpuexecutioncap => "100" 
+    },
+    {
+        :name => "kube-2",
+        :type => "worker",
+        :box => "bento/ubuntu-18.04",
+        :eth1 => "10.11.1.72",
+        :httpport => "8082",
+        :memory => "2048",
+        :cpus => "2", 
+        :cpuexecutioncap => "100" 
+    },
+    {
+        :name => "kube-3",
+        :type => "worker",
+        :box => "bento/ubuntu-18.04",
+        :eth1 => "10.11.1.73",
+        :httpport => "8083",
+        :memory => "2048",
+        :cpus => "2", 
+        :cpuexecutioncap => "100" 
+    },
+    {
+        :name => "dev",
+        :type => "dev",
+        :box => "bento/ubuntu-18.04",
+        :eth1 => "10.11.1.131",
+        :httpport => "8089",
+        :memory => "2048",
+        :cpus => "2", 
+        :cpuexecutioncap => "100" 
+    }
+]
+
+VAGRANTFILE_API_VERSION = "2"
+
+ASW_SCRIPTS='/home/asw/shared/scripts/'
+
+IMAGE_BOX = "bento/ubuntu-18.04" 
+
+POD_NETWORK_CIDR = "10.12.0.0"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+    # Configurazioni comuni.
+
+    # Ubuntu 18.04 LTS 64 bit VirtualBox (Bento)
+    config.vm.box = IMAGE_BOX
+
+    # folder per i progetti Asw (/home/asw/projects)
+    config.vm.synced_folder "../../projects/", "/home/asw/projects", :mount_options => ["dmode=777", "fmode=777"]
+
+    # folder per le risorse condivise per gli ambienti Asw (/home/asw/shared/resources e /home/asw/shared/scripts) 
+    config.vm.synced_folder "../../shared/", "/home/asw/shared", :mount_options => ["dmode=777", "fmode=777"]
+
+    # folder per i dati condivisi per gli ambienti Asw (/home/asw/data) 
+	# da usare per eventuali volumi docker 
+    # config.vm.synced_folder "../../data/", "/home/asw/data", :mount_options => ["dmode=777", "fmode=777"]
+
+    KUBE_CLUSTER_NODES.each do |opts|
+        config.vm.define opts[:name] do |node|
+
+            node.vm.box = opts[:box]
+            # node.vm.box_version = opts[:box_version]
+            node.vm.hostname = opts[:name]
+            node.vm.network :private_network, ip: opts[:eth1], virtualbox__intnet: true
+
+            node.vm.provider "virtualbox" do |v|
+                v.name = opts[:name]
+                v.customize ["modifyvm", :id, "--memory", opts[:memory]]
+                v.customize ["modifyvm", :id, "--cpus", opts[:cpus]]
+                v.customize ["modifyvm", :id, "--cpuexecutioncap", opts[:cpuexecutioncap]]
+            end
+
+            node.vm.network "forwarded_port", guest: 22, host: 2211, id: 'ssh', auto_correct: true
+            node.ssh.forward_agent = true
+            
+            node.vm.network "forwarded_port", guest: 8080, host: opts[:httpport], id: 'http', auto_correct: true
+
+			node.vm.provision "shell" do |s| 
+				s.inline = ASW_SCRIPTS + "configure-kube-cluster-env-variables.sh $1 $2 $3 $4"
+				s.args = ["10.11.1.70", "kube-cluster", "kube-", 3]
+			end 
+
+			# 
+			# development tools 
+			#
+            if opts[:type] == "dev"
+				# installa Java, Gradle e Maven 
+				# node.vm.provision :shell, :inline => 'apt update'
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-open-jdk.sh"
+				# node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-oracle-jdk.sh"
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-gradle.sh"
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-maven.sh"	
+				
+				# crea un link simbolico alla cartella dei progetti asw nella cartella dell'utente di default 
+				node.vm.provision :shell, :inline => 'ln -s /home/asw/projects projects'				
+            end
+
+			# 
+			# docker 
+			#
+            if opts[:type] == "dev"
+				# due possibilita': 
+				# 1) installare su dev solo docker-cli e usare docker su un nodo del cluster 
+				# node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-docker-client.sh"
+                # node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-docker-client-dev.sh"
+				# 2) installare e usare docker su dev 
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "prepare-docker.sh"
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-docker.sh"
+				# comunque serve anche docker-compose 
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-docker-compose.sh"
+            else # opts[:type] == "master" || opts[:type] == "worker"
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "prepare-docker-kube-cluster.sh"
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-docker.sh"
+				# node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-docker-compose.sh"
+            end
+
+			# 
+			# kubernetes 
+			#
+            if opts[:type] == "master"
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-hosts.sh"
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kubernetes-kubeadm.sh"
+                node.vm.provision :shell, :inline => ASW_SCRIPTS + "start-kube-cluster-master.sh"
+                node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kube-cluster-calico-network-addon.sh " + POD_NETWORK_CIDR
+                node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kube-cluster-nginx-ingress-addon.sh"
+            elsif opts[:type] == "worker"
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-hosts.sh"
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kubernetes-kubeadm.sh"
+                node.vm.provision :shell, :inline => ASW_SCRIPTS + "start-kube-cluster-worker.sh " + KUBE_CLUSTER_MASTER_IP
+            else # opts[:type] == "dev" 
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-dev-hosts.sh"
+				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kubernetes-kubeadm-client.sh"
+                node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-client.sh " + KUBE_CLUSTER_MASTER_IP
+            end
+
+        end
+
+    end
+
+end 

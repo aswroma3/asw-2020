@@ -64,6 +64,11 @@ E' anche possibile:
   per consentire anche l'esecuzione concorrente di molteplici applicazioni; 
   inoltre, ha anche *Docker* oltre al software di sviluppo per *Java*
 
+* [kube-cluster](kube-cluster/):
+  un ambiente costituito da un cluster di nodi *Kubernetes* 
+  più un nodo per la compilazione dei progetti e per la costruzione delle immagini dei contenitori *Docker*; 
+  richiede notevoli risorse nel computer host
+
 <!---
 * [client-server](client-server/): 
   per l'esecuzione di applicazioni Java distribuite di tipo client-server 
