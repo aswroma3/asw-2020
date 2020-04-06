@@ -1,0 +1,31 @@
+buildscript {
+	ext {
+		springBootVersion = '2.2.6.RELEASE'
+		springDependencyManagementVersion = '1.0.9.RELEASE'
+		grpcVersion = '1.28.1'
+		protobufVersion = '3.11.0'
+		protobufPluginVersion = '0.8.8'
+	}
+	repositories {
+		mavenCentral()
+//		maven {
+//			url "https://plugins.gradle.org/m2/"
+//		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+subprojects {
+
+	apply plugin: 'java'
+
+	group = 'asw.efood'
+	sourceCompatibility = '1.8'
+
+	repositories {
+		mavenCentral()
+	}
+
+}
