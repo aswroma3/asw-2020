@@ -31,7 +31,7 @@ public class RestaurantServiceLoggingAspect {
         final String args = Arrays.toString(joinPoint.getArgs());
 //        final String methodName = joinPoint.getSignature().toShortString().replace("(..)", "()");
         final String methodName = joinPoint.getSignature().getName().replace("(..)", "()");
-        log.info("     RestaurantService.{} {} -> {}", methodName, args, retValue.toString());
+        log.info("     RestaurantService.{} {} -> {}", methodName, args, retValue);
     }
 
     private void logVoidTermination(JoinPoint joinPoint) {
@@ -45,7 +45,7 @@ public class RestaurantServiceLoggingAspect {
         final String args = Arrays.toString(joinPoint.getArgs());
 //        final String methodName = joinPoint.getSignature().toShortString().replace("(..)", "()");
         final String methodName = joinPoint.getSignature().getName().replace("(..)", "()");
-        log.info("     ERROR IN RestaurantService.{} {} -> {}", methodName, args, exception.toString());
+        log.info("     ERROR IN RestaurantService.{} {} -> {}", methodName, args, exception);
     }
 
     /* Eseguito prima dell'esecuzione del metodo */
