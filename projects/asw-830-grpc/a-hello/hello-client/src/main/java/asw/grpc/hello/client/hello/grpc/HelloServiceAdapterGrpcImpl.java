@@ -66,7 +66,6 @@ public class HelloServiceAdapterGrpcImpl implements HelloServiceAdapter {
 			logger.info("sayHello(" + name + ") [FUTURE STUB]: qui potrei fare qualcos'altro, dopo la richiesta e prima della risposta");
             HelloReply reply = futureReply.get();
 			greeting = reply.getGreeting(); 
-			logger.info("sayHello(" + name + ") [FUTURE STUB]: " + greeting);
         } catch (StatusRuntimeException e) {
             logger.info("RPC failed: " + e.getStatus());
         } catch (InterruptedException e) {
@@ -74,6 +73,7 @@ public class HelloServiceAdapterGrpcImpl implements HelloServiceAdapter {
         } catch (ExecutionException e) {
             logger.info("ExecutionException: " + e.toString());
         }
+		logger.info("sayHello(" + name + ") [FUTURE STUB]: " + greeting);
         return greeting;
     }
 
@@ -87,10 +87,10 @@ public class HelloServiceAdapterGrpcImpl implements HelloServiceAdapter {
         try {
             HelloReply reply = blockingStub.sayHello(request);
 			greeting = reply.getGreeting(); 
-			logger.info("sayHello(" + name + ") [BLOCKING STUB]: " + greeting);
         } catch (StatusRuntimeException e) {
             logger.info("RPC failed: " + e.getStatus());
         }
+		logger.info("sayHello(" + name + ") [BLOCKING STUB]: " + greeting);
         return greeting;
     }
 
