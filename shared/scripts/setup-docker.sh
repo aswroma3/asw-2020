@@ -13,7 +13,8 @@ source "/home/asw/shared/scripts/common.sh"
 # DOCKER_VERSION=5:18.09.1~3-0~ubuntu-xenial
 # DOCKER_VERSION=5:18.09.5~3-0~ubuntu-bionic
 # DOCKER_VERSION=5:18.09.7~3-0~ubuntu-bionic
-DOCKER_VERSION=5:19.03.7~3-0~ubuntu-bionic
+# DOCKER_VERSION=5:19.03.7~3-0~ubuntu-bionic
+DOCKER_VERSION=5:19.03.8~3-0~ubuntu-bionic
 
 # Per vedere le versioni disponibili 
 # apt-cache madison docker-ce

@@ -7,7 +7,7 @@ echo "installing docker-compose"
 echo "========================="
 
 # set up Docker Compose constants 
-DOCKER_COMPOSE_VERSION=1.25.4
+DOCKER_COMPOSE_VERSION=1.25.5
 # per le versioni: https://github.com/docker/compose/releases 
 
 GET_DOCKER_COMPOSE_URL=https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)
