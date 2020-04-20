@@ -1,0 +1,39 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - "$PWD/postgres:/docker-entrypoint-initdb.d"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:latest
+    depends_on:
+      - "zookeeper"
+    ports:
+      - "9092:9092"
+#      - "9094:9094"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 10.11.1.121
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "restaurant-service-event-channel:4:1,restaurant-service-command-channel:4:1"
+#      KAFKA_CREATE_TOPICS: "consumer-service-channel:1:1,restaurant-service-channel:1:1,order-service-channel:1:1"
+#      # HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+#      # HOSTNAME_COMMAND: "route -n | awk '/UG[ \t]/{print $$2}'"
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+#      # KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+#      # PORT_COMMAND: "docker port $$(hostname) 9092/tcp | cut -d: -f2
+#      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://10.11.1.188:9094
+#      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+#      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+#      LOG4J_LOGGER_KAFKA_AUTHORIZER_LOGGER: DEBUG
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

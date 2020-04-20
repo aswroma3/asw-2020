@@ -1,0 +1,10 @@
+include "efood-common-api-event"
+include "efood-common-api-command"
+include "restaurant-service-api-event"
+include "restaurant-service-api-command"
+include "restaurant-service-api-rest"
+include "restaurant-server"
+include "restaurant-client-event-listener"
+include "restaurant-client-command"
+include "restaurant-client-rest"
+
