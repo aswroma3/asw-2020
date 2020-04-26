@@ -1,6 +1,9 @@
 # word.yml
 --- 
-words: test,test,test,test
+asw: 
+  sentenceservice: 
+    word: 
+      words: test,test,test,test
 
 --- 
 spring: 
@@ -9,7 +12,10 @@ spring:
 server: 
   port: 8081
 
-words: Spring Cloud Config,Spring Cloud Config
+asw: 
+  sentenceservice: 
+    word: 
+      words: Spring Cloud Config,Spring Cloud Config
   
 --- 
 spring: 
@@ -18,7 +24,10 @@ spring:
 server: 
   port: 8082
 
-words: works,works
+asw: 
+  sentenceservice: 
+    word: 
+      words: works,works
   
 --- 
 spring: 
@@ -27,4 +36,7 @@ spring:
 server: 
   port: 8083
 
-words: from remote files,from remote files
+asw: 
+  sentenceservice: 
+    word: 
+      words: from remote files,from remote files
