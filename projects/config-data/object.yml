@@ -1,0 +1,11 @@
+# object.yml
+--- 
+spring: 
+  profiles: object
+
+server: 
+  port: 8083
+
+asw.sentence: 
+  wordservice: 
+    words: from remote files,from remote files
