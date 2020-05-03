@@ -94,9 +94,9 @@ Nei casi più semplici, è possibile eseguire un'applicazione come segue:
 
 * [asw-840-kafka](asw-840-kafka/): comunicazione asincrona con *Kafka*
 
-<!---
-* [asw-850-spring-cloud](asw-850-spring-cloud/): introduzione a *Spring Cloud* 
+* [asw-850-spring-cloud](asw-850-spring-cloud/): *Spring Cloud* 
 
+<!---
 * [asw-830-java-rmi](asw-830-java-rmi/): oggetti distribuiti e invocazione remota con *Java RMI* 
 
 * [asw-840-jms](asw-840-jms/): comunicazione asincrona con *Java Message Service* (*JMS*) 
