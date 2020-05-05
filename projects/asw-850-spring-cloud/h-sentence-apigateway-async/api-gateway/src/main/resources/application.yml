@@ -84,4 +84,4 @@ logging:
     root: INFO
     org.springframework.web: INFO
     org.springframework.web.HttpLogging: INFO
-    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway: INFO
