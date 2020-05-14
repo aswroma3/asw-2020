@@ -1,0 +1,30 @@
+buildscript {
+	ext {
+		springBootVersion = '2.2.6.RELEASE'
+		springCloudVersion = 'Hoxton.SR4'
+		swaggerVersion = '2.9.2'
+		lombokVersion = '1.18.12'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+subprojects {
+
+	apply plugin: 'java'
+
+	group = 'asw.instagnam'
+	sourceCompatibility = '1.8'
+
+	repositories {
+		mavenCentral()
+		maven {
+			url 'https://repo.spring.io/libs-milestone'
+		}
+	}
+
+}

@@ -1,0 +1,9 @@
+include 'ricette'
+include 'connessioni'
+include 'ricette-seguite'
+
+rootProject.name = 'asw-instagnam'
+
+project(':ricette').name = 'ricette'
+project(':connessioni').name = 'connessioni'
+project(':ricette-seguite').name = 'ricette-seguite'

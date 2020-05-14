@@ -137,6 +137,16 @@ Nei casi più semplici, è possibile eseguire un'applicazione come segue:
 * [asw-899-docker-su-swarm](asw-899-docker-su-swarm/): rilascio di un'applicazione multi-servizi e multi-contenitori sullo swarm *swarm.inf.uniroma3.it*
 -->
 
+## Progetti per l'anno accademico 2019-2020 
+
+* [asw-instagnam](asw-instagnam/): *Instagnam*: un semplice social-network per la condivisione di ricette di cucina 
+
+<!---
+* [asw-895-docker-orchestrazione](asw-895-docker-orchestrazione/): *composizione* e *orchestrazione* di *contenitori Docker* 
+
+* [asw-899-docker-su-swarm](asw-899-docker-su-swarm/): rilascio di un'applicazione multi-servizi e multi-contenitori sullo swarm *swarm.inf.uniroma3.it*
+-->
+
 <!---
 ## Libreria 
 
