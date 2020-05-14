@@ -56,4 +56,4 @@ Inoltre, *Consul* può essere arrestato con lo script `stop-consul.sh`.
 
 ## Descrizione delle attività da svolgere 
 
-Si veda il sito web del corso di [Analisi e progettazione del software](http://cabibbo.dia.uniroma3.it/asw/).
+Si veda il sito web del corso di [Architettura dei sistemi software](http://cabibbo.dia.uniroma3.it/asw/).
