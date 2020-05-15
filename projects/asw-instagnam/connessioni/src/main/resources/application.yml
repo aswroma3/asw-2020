@@ -20,8 +20,8 @@ spring:
       ribbon.enabled: false 
 
 server: 
-#  port: ${PORT:${SERVER_PORT:0}}
-  port: 8082
+  port: ${PORT:${SERVER_PORT:0}}
+#  port: 8080
 
 # fa il logging dei comandi sql eseguiti 
 #spring.jpa.show-sql: true

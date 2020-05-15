@@ -1,0 +1,59 @@
+# application.yml 
+--- 
+spring: 
+  application: 
+    name: apigateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery: 
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        # configurazione per effettuare esprimenti, NON USARE UN PRODUZIONE 
+        # dopo quanto tempo consul deve smettere di restituire servizi che non rispondono all'health check? 
+        healthCheckCriticalTimeout: 60s
+        # consul deve restituire solo servizi che passano l'health check (default=false) 
+        queryPassing: true 
+    loadbalancer: 
+      ribbon.enabled: false 
+    # spring cloud gateway routes 
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: ricette_seguite_route
+        uri: lb://ricette-seguite
+        predicates:
+        - Path=/ricette-seguite
+        filters:
+        - SetPath=/
+      - id: ricette_route
+        uri: lb://ricette
+        predicates:
+        - Path=/ricette
+        filters:
+        - SetPath=/
+      - id: connessioni_route
+        uri: lb://connessioni
+        predicates:
+        - Path=/connessioni
+        filters:
+        - SetPath=/
+    
+server: 
+#  port: ${PORT:${SERVER_PORT:0}}
+  port: 8080
+
+management: 
+  endpoint.gateway.enabled: true 
+  endpoints.web.exposure.include: gateway,beans
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.web.HttpLogging: INFO
+    org.springframework.cloud.gateway: INFO
