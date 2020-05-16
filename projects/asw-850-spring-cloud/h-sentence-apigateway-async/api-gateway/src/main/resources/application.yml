@@ -77,7 +77,7 @@ server:
 
 management: 
   endpoint.gateway.enabled: true 
-  endpoints.web.exposure.include: gateway,beans
+  endpoints.web.exposure.include: info,health,gateway,beans
 
 logging:
   level:
