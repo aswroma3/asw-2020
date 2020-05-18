@@ -1,0 +1,42 @@
+version: '2'
+services:
+  consul:
+    image: consul
+  subject:
+    build: ./word-service
+    image: aswroma3/sentence-word-compose:2020.1 
+    depends_on:
+      - "consul"
+    environment: 
+      - SPRING_PROFILES_ACTIVE=subject
+  verb:
+    build: ./word-service
+    image: aswroma3/sentence-word-compose:2020.1 
+    depends_on:
+      - "consul"
+    environment: 
+      - SPRING_PROFILES_ACTIVE=verb
+  object:
+    build: ./word-service
+    image: aswroma3/sentence-word-compose:2020.1 
+    depends_on:
+      - "consul"
+    environment: 
+      - SPRING_PROFILES_ACTIVE=object
+  sentence:
+    build: ./sentence-service
+    image: aswroma3/sentence-sentence-compose:2020.1 
+    depends_on:
+      - "consul"
+  apigateway:
+    build: ./api-gateway
+    image: aswroma3/sentence-apigateway-compose:2020.1 
+    ports:
+    - "8080:8080"
+    depends_on:
+      - "consul"
+
+
+
+
+
