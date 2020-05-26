@@ -18,8 +18,8 @@ java -Xms64m -Xmx128m -jar -Dspring.profiles.active=object -Dasw.sentence.wordse
 
 echo Starting Sentence Service [*1, using Async REST Client and Circuit Breaker]
 
-#java -Xms64m -Xmx128m -jar sentence-service/build/libs/sentence.jar &
-java -Xms64m -Xmx128m -jar -Dasw.sentence.sentenceservice.returnLatency=true sentence-service/build/libs/sentence.jar &
+#java -Xms64m -Xmx128m -jar sentence-service-async/build/libs/sentence-async.jar &
+java -Xms64m -Xmx128m -jar -Dasw.sentence.sentenceservice.returnLatency=true sentence-service-async/build/libs/sentence-async.jar &
 
 sleep 10
 
