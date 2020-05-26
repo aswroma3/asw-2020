@@ -1,0 +1,47 @@
+version: '2'
+services:
+  consul:
+    image: consul
+  subject:
+    build: ./word-service
+    image: aswroma3/sentence-word-compose:2020.1 
+    depends_on:
+      - "consul"
+    environment: 
+      - SPRING_PROFILES_ACTIVE=subject
+      - ASW_SENTENCE_WORDSERVICE_LATENCY=100
+  verb:
+    build: ./word-service
+    image: aswroma3/sentence-word-compose:2020.1 
+    depends_on:
+      - "consul"
+    environment: 
+      - SPRING_PROFILES_ACTIVE=verb
+      - ASW_SENTENCE_WORDSERVICE_LATENCY=100
+  object:
+    build: ./word-service
+    image: aswroma3/sentence-word-compose:2020.1 
+    depends_on:
+      - "consul"
+    environment: 
+      - SPRING_PROFILES_ACTIVE=object
+      - ASW_SENTENCE_WORDSERVICE_LATENCY=100
+  sentence-async:
+    build: ./sentence-service-async
+    image: aswroma3/sentence-sentence-async-compose:2020.1 
+    depends_on:
+      - "consul"
+    environment: 
+      - ASW_SENTENCE_SENTENCESERVICE_RETURNLATENCY=true
+  apigateway:
+    build: ./api-gateway
+    image: aswroma3/sentence-apigateway-compose:2020.1 
+    ports:
+    - "8080:8080"
+    depends_on:
+      - "consul"
+
+
+
+
+
