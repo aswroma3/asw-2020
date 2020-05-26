@@ -35,7 +35,7 @@ Hardware (virtuale)
 
 * Virtual CPU: 2 
 
-* CPU execution cap: 100% 
+* CPU execution cap: 100% (kube-1), 50% (kube-2 e kube-3) 
 
 ### dev
 
@@ -52,7 +52,6 @@ La macchina virtuale **dev** ha il seguente software
 Configurazione di rete 
 
 * Indirizzo IP: 10.11.1.131 
-  <!-- (come *developer*) --> 
 
 * Porte pubblicate sull'host: 8080 (http) -> 8089   
 
@@ -62,4 +61,4 @@ Hardware (virtuale)
 
 * Virtual CPU: 2 
 
-* CPU execution cap: 100% 
+* CPU execution cap: 50% 

@@ -8,13 +8,9 @@ source "/home/asw/shared/scripts/common.sh"
 # invocare uno script separato come prepare-docker-configuration.sh 
 
 # set up Docker constants 
-# DOCKER_VERSION=18.03.1~ce-0~ubuntu
-# DOCKER_VERSION=18.06.1~ce~3-0~ubuntu
-# DOCKER_VERSION=5:18.09.1~3-0~ubuntu-xenial
-# DOCKER_VERSION=5:18.09.5~3-0~ubuntu-bionic
-# DOCKER_VERSION=5:18.09.7~3-0~ubuntu-bionic
 # DOCKER_VERSION=5:19.03.7~3-0~ubuntu-bionic
-DOCKER_VERSION=5:19.03.8~3-0~ubuntu-bionic
+# DOCKER_VERSION=5:19.03.8~3-0~ubuntu-bionic
+DOCKER_VERSION=5:19.03.9~3-0~ubuntu-bionic
 
 # Per vedere le versioni disponibili 
 # apt-cache madison docker-ce

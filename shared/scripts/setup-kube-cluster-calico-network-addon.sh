@@ -16,7 +16,14 @@ POD_NETWORK_CIDR=$1
 #kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
 
 mkdir -p /etc/kube-cluster
-curl -L https://docs.projectcalico.org/v3.11/manifests/calico.yaml | sed s/192.168.0.0/${POD_NETWORK_CIDR}/ > /etc/kube-cluster/calico-kube-cluster.yaml
+#curl -L https://docs.projectcalico.org/v3.14/manifests/calico.yaml | sed s/192.168.0.0/${POD_NETWORK_CIDR}/ > /etc/kube-cluster/calico-kube-cluster.yaml
+
+curl -L https://docs.projectcalico.org/v3.14/manifests/calico.yaml \
+        | sed s/'# - name: CALICO_IPV4POOL_CIDR'/'- name: CALICO_IPV4POOL_CIDR'/ \
+        | sed s/'#   value: "192.168.0.0\/16"'/'  value: "192.168.0.0\/16"'/ \
+        | sed s/192.168.0.0/${POD_NETWORK_CIDR}/ \
+		> /etc/kube-cluster/calico-kube-cluster.yaml
+
 kubectl apply -f /etc/kube-cluster/calico-kube-cluster.yaml
 
 

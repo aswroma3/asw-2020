@@ -6,6 +6,10 @@ echo "===================================="
 echo "starting kubernetes cluster (master)"
 echo "===================================="
 
+# usa questa pod network al posto di quella di default 
+# POD_NETWORK_CIDR=10.12.0.0
+POD_NETWORK_CIDR=$1
+
 # fa copiare i file di configurazione da usare negli altri nodi con scp 
 # see https://medium.com/@wso2tech/multi-node-kubernetes-cluster-with-vagrant-virtualbox-and-kubeadm-9d3eaac28b98 (punto 13) 
 # ATTENZIONE: sshpass non è sicuro: https://www.tecmint.com/sshpass-non-interactive-ssh-login-shell-script-ssh-password/ 
@@ -19,7 +23,7 @@ HOST_NAME=$(hostname -s)
 # see https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/
 # see https://www.mankier.com/1/kubeadm-init
 #kubeadm init --apiserver-advertise-address=$IP_ADDR --apiserver-cert-extra-sans=$IP_ADDR  --node-name $HOST_NAME --pod-network-cidr=192.168.0.0/16
-kubeadm init --apiserver-advertise-address=$IP_ADDR --apiserver-cert-extra-sans=$IP_ADDR  --node-name $HOST_NAME --pod-network-cidr=10.12.0.0/16
+kubeadm init --apiserver-advertise-address=$IP_ADDR --apiserver-cert-extra-sans=$IP_ADDR  --node-name $HOST_NAME --pod-network-cidr=${POD_NETWORK_CIDR}/16
 
 # copio il file config anche per l'utente "vagrant"
 # see https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/

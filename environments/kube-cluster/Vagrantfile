@@ -22,7 +22,7 @@ KUBE_CLUSTER_NODES = [
         :httpport => "8082",
         :memory => "2048",
         :cpus => "2", 
-        :cpuexecutioncap => "100" 
+        :cpuexecutioncap => "50" 
     },
     {
         :name => "kube-3",
@@ -32,7 +32,7 @@ KUBE_CLUSTER_NODES = [
         :httpport => "8083",
         :memory => "2048",
         :cpus => "2", 
-        :cpuexecutioncap => "100" 
+        :cpuexecutioncap => "50" 
     },
     {
         :name => "dev",
@@ -42,7 +42,7 @@ KUBE_CLUSTER_NODES = [
         :httpport => "8089",
         :memory => "2048",
         :cpus => "2", 
-        :cpuexecutioncap => "100" 
+        :cpuexecutioncap => "50" 
     }
 ]
 
@@ -94,6 +94,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			node.vm.provision "shell" do |s| 
 				s.inline = ASW_SCRIPTS + "configure-kube-cluster-env-variables.sh $1 $2 $3 $4"
 				s.args = ["10.11.1.70", "kube-cluster", "kube-", 3]
+				# starting ip, cluster domain, node name prefix, number of nodes 
 			end 
 
 			# 
@@ -134,19 +135,47 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			# kubernetes 
 			#
             if opts[:type] == "master"
-				node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-hosts.sh"
+				# node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-hosts.sh"
+				node.vm.provision "shell" do |s| 
+					s.inline = ASW_SCRIPTS + "configure-kube-cluster-hosts.sh $1 $2 $3 $4"
+					s.args = ["10.11.1.70", "kube-cluster", "kube-", 3]
+				end 
 				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kubernetes-kubeadm.sh"
-                node.vm.provision :shell, :inline => ASW_SCRIPTS + "start-kube-cluster-master.sh"
-                node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kube-cluster-calico-network-addon.sh " + POD_NETWORK_CIDR
-                node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kube-cluster-nginx-ingress-addon.sh"
+                # node.vm.provision :shell, :inline => ASW_SCRIPTS + "start-kube-cluster-master.sh " + POD_NETWORK_CIDR
+				node.vm.provision "shell" do |s| 
+					s.inline = ASW_SCRIPTS + "start-kube-cluster-master.sh $1"
+					s.args = [POD_NETWORK_CIDR]
+				end 
+                # node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kube-cluster-calico-network-addon.sh " + POD_NETWORK_CIDR
+				node.vm.provision "shell" do |s| 
+					s.inline = ASW_SCRIPTS + "setup-kube-cluster-calico-network-addon.sh $1"
+					s.args = [POD_NETWORK_CIDR]
+				end 
+                node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kube-cluster-ingress-nginx-addon.sh"
             elsif opts[:type] == "worker"
-				node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-hosts.sh"
+				# node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-hosts.sh"
+				node.vm.provision "shell" do |s| 
+					s.inline = ASW_SCRIPTS + "configure-kube-cluster-hosts.sh $1 $2 $3 $4"
+					s.args = ["10.11.1.70", "kube-cluster", "kube-", 3]
+				end 
 				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kubernetes-kubeadm.sh"
-                node.vm.provision :shell, :inline => ASW_SCRIPTS + "start-kube-cluster-worker.sh " + KUBE_CLUSTER_MASTER_IP
+                # node.vm.provision :shell, :inline => ASW_SCRIPTS + "start-kube-cluster-worker.sh " + KUBE_CLUSTER_MASTER_IP
+				node.vm.provision "shell" do |s| 
+					s.inline = ASW_SCRIPTS + "start-kube-cluster-worker.sh $1"
+					s.args = [KUBE_CLUSTER_MASTER_IP]
+				end 
             else # opts[:type] == "dev" 
-				node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-dev-hosts.sh"
+				# node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-dev-hosts.sh"
+				node.vm.provision "shell" do |s| 
+					s.inline = ASW_SCRIPTS + "configure-kube-cluster-dev-hosts.sh $1 $2 $3 $4"
+					s.args = ["10.11.1.70", "kube-cluster", "kube-", 3]
+				end 
 				node.vm.provision :shell, :inline => ASW_SCRIPTS + "setup-kubernetes-kubeadm-client.sh"
-                node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-client.sh " + KUBE_CLUSTER_MASTER_IP
+                # node.vm.provision :shell, :inline => ASW_SCRIPTS + "configure-kube-cluster-client.sh " + KUBE_CLUSTER_MASTER_IP
+				node.vm.provision "shell" do |s| 
+					s.inline = ASW_SCRIPTS + "configure-kube-cluster-client.sh $1"
+					s.args = [KUBE_CLUSTER_MASTER_IP]
+				end 
             end
 
         end
