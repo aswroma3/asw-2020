@@ -1,0 +1,249 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subject
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentence
+      service: subject
+  template: 
+    metadata:
+      labels:
+        app: sentence
+        service: subject
+    spec:
+      containers:
+      - name: subject-container
+        image: aswroma3/sentence-word-kube:2020.1
+        env: 
+        - name: SPRING_PROFILES_ACTIVE
+          value: subject
+        - name: ASW_SENTENCE_WORDSERVICE_LATENCY
+          value: "100"
+        ports:
+        - containerPort: 8080
+        readinessProbe: 
+          httpGet: 
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: verb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentence
+      service: verb
+  template: 
+    metadata:
+      labels:
+        app: sentence
+        service: verb
+    spec:
+      containers:
+      - name: verb-container
+        image: aswroma3/sentence-word-kube:2020.1
+        env: 
+        - name: SPRING_PROFILES_ACTIVE
+          value: verb
+        - name: ASW_SENTENCE_WORDSERVICE_LATENCY
+          value: "100"
+        ports:
+        - containerPort: 8080
+        readinessProbe: 
+          httpGet: 
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: object
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentence
+      service: object
+  template: 
+    metadata:
+      labels:
+        app: sentence
+        service: object
+    spec:
+      containers:
+      - name: object-container
+        image: aswroma3/sentence-word-kube:2020.1
+        env: 
+        - name: SPRING_PROFILES_ACTIVE
+          value: object
+        - name: ASW_SENTENCE_WORDSERVICE_LATENCY
+          value: "100"
+        ports:
+        - containerPort: 8080
+        readinessProbe: 
+          httpGet: 
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentence
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentence
+      service: sentence
+  template: 
+    metadata:
+      labels:
+        app: sentence
+        service: sentence
+    spec:
+      containers:
+      - name: sentence-container
+        image: aswroma3/sentence-sentence-async-kube:2020.1
+        env: 
+        - name: ASW_SENTENCE_SENTENCESERVICE_RETURNLATENCY
+          value: "true"
+        ports:
+        - containerPort: 8080
+        readinessProbe: 
+          httpGet: 
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apigateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentence
+      service: apigateway
+  template: 
+    metadata:
+      labels:
+        app: sentence
+        service: apigateway
+    spec:
+      containers:
+      - name: apigateway-container
+        image: aswroma3/sentence-apigateway-kube:2020.1
+        ports:
+        - containerPort: 8080
+        readinessProbe: 
+          httpGet: 
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: subject
+spec:
+  selector:
+    app: sentence
+    service: subject
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: verb
+spec:
+  selector:
+    app: sentence
+    service: verb
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: object
+spec:
+  selector:
+    app: sentence
+    service: object
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sentence
+spec:
+  selector:
+    app: sentence
+    service: sentence
+#  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: apigateway
+spec:
+  selector:
+    app: sentence
+    service: apigateway
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+#    nodePort: 32082
+
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: sentence
+spec:
+  rules:
+  - host: sentence 
+    http: 
+      paths: 
+      - path: /
+        backend: 
+          serviceName: apigateway
+          servicePort: 8080 

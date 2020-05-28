@@ -129,12 +129,8 @@ Nei casi più semplici, è possibile eseguire un'applicazione come segue:
 
 ## Progetti Kubernetes 
 
+* [asw-890-kubernetes](asw-890-kubernetes/): *orchestrazione* di contenitori con *Kubernetes* 
 <!---
-* [asw-890-docker](asw-890-docker/): esempi di *contenitori Docker* 
-
-* [asw-895-docker-orchestrazione](asw-895-docker-orchestrazione/): *composizione* e *orchestrazione* di *contenitori Docker* 
-
-* [asw-899-docker-su-swarm](asw-899-docker-su-swarm/): rilascio di un'applicazione multi-servizi e multi-contenitori sullo swarm *swarm.inf.uniroma3.it*
 -->
 
 ## Progetti per l'anno accademico 2019-2020 

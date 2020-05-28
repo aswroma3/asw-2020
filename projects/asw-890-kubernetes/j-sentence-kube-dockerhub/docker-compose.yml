@@ -1,0 +1,27 @@
+version: '3'
+services:
+  subject:
+    build: ./word-service
+    image: aswroma3/sentence-word-kube:2020.1 
+    environment: 
+      - SPRING_PROFILES_ACTIVE=subject
+  verb:
+    build: ./word-service
+    image: aswroma3/sentence-word-kube:2020.1 
+    environment: 
+      - SPRING_PROFILES_ACTIVE=verb
+  object:
+    build: ./word-service
+    image: aswroma3/sentence-word-kube:2020.1 
+    environment: 
+      - SPRING_PROFILES_ACTIVE=object
+  sentence:
+    build: ./sentence-service
+    image: aswroma3/sentence-sentence-kube:2020.1 
+  sentence-async:
+    build: ./sentence-service-async
+    image: aswroma3/sentence-sentence-async-kube:2020.1 
+  apigateway:
+    build: ./api-gateway
+    image: aswroma3/sentence-apigateway-kube:2020.1 
+
