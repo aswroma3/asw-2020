@@ -23,7 +23,10 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
+          # spring.cloud.gateway.discovery.locator.enabled abilita la definizione implicita di rotte 
+          # sulla base dei servizi registrati nel servizio di service discover (default=false) 
+          # enabled: true       
+          enabled: false
       routes:
       - id: sentence_route
         uri: lb://sentence
