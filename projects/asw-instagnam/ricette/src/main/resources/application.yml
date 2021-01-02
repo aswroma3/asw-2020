@@ -18,7 +18,16 @@ spring:
         queryPassing: true 
     loadbalancer: 
       ribbon.enabled: false 
-
+  datasource:
+    url: jdbc:mysql://localhost:3308/ricette?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: "username"
+    password: "password"
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 server: 
   port: ${PORT:${SERVER_PORT:0}}
 #  port: 8080
