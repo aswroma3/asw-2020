@@ -72,7 +72,7 @@ public class RicetteController {
 		Collection<Ricetta> ricette = 
 			ricetteComplete
 				.stream()
-				.map(r -> new Ricetta(r))
+				.map(Ricetta::new)
 				.collect(Collectors.toList());
 		return ricette; 
 	}
