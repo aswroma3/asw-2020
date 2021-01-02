@@ -8,8 +8,8 @@ import lombok.*;
 @Data @NoArgsConstructor
 public class Connessione {
 
-	@Id 
-	@GeneratedValue
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id; 
 	private String follower; 
 	private String followed; 

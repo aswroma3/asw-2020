@@ -1,6 +1,6 @@
 # application.yml
 --- 
-spring: 
+spring:
   application: 
     name: connessioni
   cloud:
@@ -17,7 +17,17 @@ spring:
         # consul deve restituire solo servizi che passano l'health check (default=false) 
         queryPassing: true 
     loadbalancer: 
-      ribbon.enabled: false 
+      ribbon.enabled: false
+  datasource:
+      url: jdbc:mysql://localhost:3307/connessioni?serverTimezone=UTC
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: "username"
+      password: "password"
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 
 server: 
   port: ${PORT:${SERVER_PORT:0}}
