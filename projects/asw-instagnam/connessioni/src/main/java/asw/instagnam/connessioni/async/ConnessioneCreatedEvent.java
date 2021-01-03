@@ -13,4 +13,5 @@ public class ConnessioneCreatedEvent {
     private String follower;
     private String followed;
 
+
 }
