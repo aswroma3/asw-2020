@@ -1,5 +1,6 @@
 package asw.instagnam.connessioni.domain;
 
+import asw.instagnam.connessioni.async.MessagePublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,13 @@ public class ConnessioniService {
 	@Autowired
 	private ConnessioniRepository connessioniRepository;
 
+	@Autowired
+	MessagePublisher<Connessione> connessioneMessagePublisher;
+
  	public Connessione createConnessione(String follower, String followed) {
 		Connessione connessione = new Connessione(follower, followed); 
 		connessione = connessioniRepository.save(connessione);
+		connessioneMessagePublisher.sendMessage(connessione);
 		return connessione;
 	}
 

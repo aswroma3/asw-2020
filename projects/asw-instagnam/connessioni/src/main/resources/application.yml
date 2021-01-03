@@ -28,7 +28,12 @@ spring:
       ddl-auto: create
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
-
+  kafka:
+    # Questo progetto produce soltanto, e non consuma messaggi
+    producer:
+      bootstrap-servers: localhost:9030
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 server: 
   port: ${PORT:${SERVER_PORT:0}}
 #  port: 8080
@@ -37,3 +42,8 @@ server:
 #spring.jpa.show-sql: true
 # disable OSIV
 spring.jpa.open-in-view: false
+
+asw:
+  kafka:
+    topic:
+      out: connessioneTopic
