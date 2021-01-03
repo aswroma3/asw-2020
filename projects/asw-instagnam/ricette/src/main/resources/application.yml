@@ -29,13 +29,7 @@ spring:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
   kafka:
-    consumer:
-      bootstrap-servers: localhost:9030
-      group-id: group_asw_ricette
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-
+    # Questo progetto produce soltanto, e non consuma messaggi
     producer:
       bootstrap-servers: localhost:9030
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -48,3 +42,8 @@ server:
 #spring.jpa.show-sql: true
 # disable OSIV
 spring.jpa.open-in-view: false
+
+asw:
+  kafka:
+    topic:
+      out: ricetteTopic
