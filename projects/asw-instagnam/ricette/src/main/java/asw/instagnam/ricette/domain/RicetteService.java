@@ -14,9 +14,13 @@ public class RicetteService {
 	@Autowired
 	private RicetteRepository ricetteRepository;
 
+	@Autowired
+	private RicettaMessagePublisher ricettaMessagePublisher;
+
  	public RicettaCompleta createRicetta(String autore, String titolo, String preparazione) {
 		RicettaCompleta ricetta = new RicettaCompleta(autore, titolo, preparazione); 
 		ricetta = ricetteRepository.save(ricetta);
+		ricettaMessagePublisher.sendMessage(ricetta.toString());
 		return ricetta;
 	}
 

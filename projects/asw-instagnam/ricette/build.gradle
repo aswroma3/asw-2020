@@ -15,6 +15,7 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.apache.commons:commons-lang3:3.8.1'
+	implementation 'org.springframework.kafka:spring-kafka'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
