@@ -4,6 +4,7 @@ import asw.instagnam.ricetteseguite.domain.Connessione;
 import asw.instagnam.ricetteseguite.domain.ConnessioniService;
 import asw.instagnam.ricetteseguite.rest.RicetteSeguiteController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ public class ConnessioneMessageConsumer {
     private final Logger logger = Logger.getLogger(RicetteSeguiteController.class.toString());
 
     @Autowired
+    @Qualifier("connessioniServiceImpl")
     ConnessioniService connessioniServiceImpl;
 
     @KafkaListener(topics = "${asw.kafka.topic.connessione.in}")
