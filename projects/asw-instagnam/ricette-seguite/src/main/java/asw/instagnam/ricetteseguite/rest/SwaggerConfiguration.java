@@ -19,6 +19,10 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
+
+    @Autowired
+    private TypeResolver typeResolver;
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -32,10 +36,7 @@ public class SwaggerConfiguration {
                                         typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
                                 typeResolver.resolve(WildcardType.class))
                 )
-                .useDefaultResponseMessages(false)
-                ;
+                .useDefaultResponseMessages(false);
     }
 
-    @Autowired
-    private TypeResolver typeResolver;
 }
