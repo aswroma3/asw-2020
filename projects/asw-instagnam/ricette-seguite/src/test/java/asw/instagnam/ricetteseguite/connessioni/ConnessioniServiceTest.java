@@ -60,7 +60,7 @@ public class ConnessioniServiceTest {
     }
 
     @Test
-    public void testSaveOrUpdateConnessioni() {
+    public void testSaveOrUpdateConnessione() {
         connessioniService.save(new Connessione(1L, "Maria", "Mary"));
 
         Optional<Connessione> connessioneOpt = connessioneRepository.findById(1L);
