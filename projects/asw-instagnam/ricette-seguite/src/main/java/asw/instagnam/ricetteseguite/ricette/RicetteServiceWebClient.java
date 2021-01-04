@@ -40,6 +40,11 @@ public class RicetteServiceWebClient implements RicetteService {
             e.printStackTrace();
         }
 		return ricette; 
-	}	
+	}
+
+	@Override
+	public void save(Ricetta ricetta) {
+		throw new UnsupportedOperationException("The save operation is not possible via rest");
+	}
 
 }

@@ -6,8 +6,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 @Entity
+@Table(indexes = @Index(name = "index_follower", columnList = "follower"))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
