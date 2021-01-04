@@ -15,12 +15,12 @@ public class ConnessioneMessageConsumer {
     private final Logger logger = Logger.getLogger(RicetteSeguiteController.class.toString());
 
     @Autowired
-    ConnessioniService connessioniService;
+    ConnessioniService connessioniServiceImpl;
 
     @KafkaListener(topics = "${asw.kafka.topic.connessione.in}")
     public void listener(ConnessioneCreatedEvent connessioneCreatedEvent) {
         logger.info(String.format("$$$$ => Consumed message: %s", connessioneCreatedEvent));
-        connessioniService.save(new Connessione(connessioneCreatedEvent.getId(), connessioneCreatedEvent.getFollower(), connessioneCreatedEvent.getFollowed()));
+        connessioniServiceImpl.save(new Connessione(connessioneCreatedEvent.getId(), connessioneCreatedEvent.getFollower(), connessioneCreatedEvent.getFollowed()));
     }
 
 }

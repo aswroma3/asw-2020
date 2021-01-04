@@ -15,12 +15,12 @@ public class RicettaMessageConsumer {
     private final Logger logger = Logger.getLogger(RicetteSeguiteController.class.toString());
 
     @Autowired
-    RicetteService ricetteService;
+    RicetteService ricetteServiceImpl;
 
     @KafkaListener(topics = "${asw.kafka.topic.ricetta.in}")
     public void listener(RicettaCreatedEvent ricettaCreatedEvent) {
         logger.info(String.format("$$$$ => Consumed message: %s", ricettaCreatedEvent));
-        ricetteService.save(new Ricetta(ricettaCreatedEvent.getId(), ricettaCreatedEvent.getAutore(), ricettaCreatedEvent.getTitolo()));
+        ricetteServiceImpl.save(new Ricetta(ricettaCreatedEvent.getId(), ricettaCreatedEvent.getAutore(), ricettaCreatedEvent.getTitolo()));
     }
 
 }
