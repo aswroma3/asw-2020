@@ -17,7 +17,7 @@ public class RicettaMessagePublisherImpl implements RicettaMessagePublisher {
     @Autowired
     private KafkaTemplate<String, RicettaCreatedEvent> kafkaTemplate;
 
-    @Value("${asw.kafka.topic.out:}")
+    @Value("${asw.kafka.topic.ricetta.out:}")
     private String topic;
 
     public void sendMessage(RicettaCompleta ricettaCompleta) {

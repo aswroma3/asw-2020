@@ -43,7 +43,4 @@ server:
 # disable OSIV
 spring.jpa.open-in-view: false
 
-asw:
-  kafka:
-    topic:
-      out: connessioneTopic
+asw.kafka.topic.connessione.out: connessioneTopic

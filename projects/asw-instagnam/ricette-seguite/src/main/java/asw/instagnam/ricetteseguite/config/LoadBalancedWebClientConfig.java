@@ -3,6 +3,7 @@ package asw.instagnam.ricetteseguite.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 
+import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 
@@ -25,6 +26,11 @@ public class LoadBalancedWebClientConfig {
         return loadBalancedWebClientBuilder
 					.uriBuilderFactory(factory)
 					.build();
+    }
+
+    @Bean
+    public StringJsonMessageConverter jsonConverter() {
+        return new StringJsonMessageConverter();
     }
 
 }

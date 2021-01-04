@@ -17,10 +17,34 @@ spring:
         # consul deve restituire solo servizi che passano l'health check (default=false) 
         queryPassing: true 
     loadbalancer: 
-      ribbon.enabled: false 
-
+      ribbon.enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:3309/ricette_seguite?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: "username"
+    password: "password"
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9030
+      group-id: ricetteSeguiteGroup
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: 'asw.instagnam.connessioni.async'
 server: 
   port: ${PORT:${SERVER_PORT:0}}
 #  port: 8080
 
 spring.jpa.open-in-view: false
+
+asw.kafka.topic.ricetta.in: ricetteTopic
+asw.kafka.topic.connessione.in: connessioneTopic

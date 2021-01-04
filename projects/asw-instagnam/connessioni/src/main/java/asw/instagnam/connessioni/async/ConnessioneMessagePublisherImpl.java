@@ -17,7 +17,7 @@ public class ConnessioneMessagePublisherImpl implements ConnessioneMessagePublis
     @Autowired
     private KafkaTemplate<String, ConnessioneCreatedEvent> kafkaTemplate;
 
-    @Value("${asw.kafka.topic.out:}")
+    @Value("${asw.kafka.topic.connessione.out:}")
     private String topic;
 
     public void sendMessage(Connessione connessione) {
