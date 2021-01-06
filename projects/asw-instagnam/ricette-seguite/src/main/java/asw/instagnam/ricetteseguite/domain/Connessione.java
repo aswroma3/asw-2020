@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 public class Connessione {
 
-    @Id
+    @Id /* ID non auto increment perchè questo progetto non è proprietario della creazione di questi oggetti.*/
     private Long id;
     private String follower;
     private String followed;

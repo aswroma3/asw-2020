@@ -10,6 +10,10 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 @EnableAutoConfiguration(exclude = KafkaAutoConfiguration.class)
 public class RicetteSeguiteControllerTest {
@@ -20,10 +24,29 @@ public class RicetteSeguiteControllerTest {
     @Autowired
     RicettaRepository ricettaRepository;
 
+    @Autowired
+    RicetteSeguiteController ricetteSeguiteController;
+
     @Test
-    public void test() {
-        connessioneRepository.save(new Connessione(1L, "follower", "followed"));
-        ricettaRepository.save(new Ricetta(1L, "autore", "titolo"));
+    public void testGetRicetteSeguite() {
+        connessioneRepository.save(new Connessione(1L, "Olivia", "Ava"));
+        connessioneRepository.save(new Connessione(2L, "Olivia", "Isla"));
+        connessioneRepository.save(new Connessione(3L, "Olivia", "Michael"));
+        connessioneRepository.save(new Connessione(4L, "Isla", "Harry"));
+        connessioneRepository.save(new Connessione(5L, "Ava", "Noah"));
+        connessioneRepository.save(new Connessione(6L, "James", "Noah"));
+        connessioneRepository.save(new Connessione(7L, "Michael", "Richard"));
+
+        ricettaRepository.save(new Ricetta(1L, "Isla", "Insalata di polipo"));
+        ricettaRepository.save(new Ricetta(2L, "Ava", "Polpettine di tonno e ricotta"));
+        ricettaRepository.save(new Ricetta(3L, "Michael", "Salmone croccante"));
+        ricettaRepository.save(new Ricetta(4L, "James", "Orata al forno"));
+
+        Collection<Ricetta> ricette = ricetteSeguiteController.getRicetteSeguite("Olivia");
+        assertThat(ricette).hasSize(3);
+        assertThat(ricette)
+                .extracting(Ricetta::getTitolo)
+                .containsExactlyInAnyOrder("Insalata di polipo", "Polpettine di tonno e ricotta", "Salmone croccante");
     }
 
 }

@@ -24,6 +24,7 @@ public class RicetteSeguiteService {
         Collection<Connessione> connessioni = connessioniService.getConnessioniByFollower(utente);
         for (Connessione connessione : connessioni) {
             String followed = connessione.getFollowed();
+            //TODO -> Possiamo migliorare le performance eseguendo una sola query
             Collection<Ricetta> ricetteByFollowed = ricetteService.getRicetteByAutore(followed);
             ricette.addAll(ricetteByFollowed);
         }
