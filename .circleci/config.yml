@@ -39,4 +39,4 @@ jobs:
           key: v1-dependencies-{{ checksum "projects/asw-instagnam/build.gradle" }}
 
       # run tests!
-      - run: gradle test
+      - run:  gradle test -p projects/asw-instagnam/
